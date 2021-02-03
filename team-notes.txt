@@ -7,18 +7,24 @@ Iterate through teams and keep track of score
 Play the Jeopardy theme! (optional)
 Question and Answer display
 Visual appeal - (ascii art?) and user interface
+
+Calendar
 Scoping for Arcade
     Find some examples
     Watch some videos?
     Write about 5 questions.
     Set up a github and Trello? - Aaron
+
 Draft the program
     Create a drawing of interface
     Create a plaintext of the rules
     Text file or Cloud Database scoping - Feb 1
+
 User Interface - Feb 2 to Feb 16
     Question Input
+
 Debugging Phase March 23 to 30th
     Prototype ready by Feb 16th
+
 Demo (Everything Done) - April 1
     Feedback and submit April 3

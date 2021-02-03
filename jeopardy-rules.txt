@@ -1,0 +1,33 @@
+You will be playing Jeopardy in teams. Three teams will play in the first and the other three later in the
+day. Each team must select a captain who will be in charge of the buzzer and will be the spokesperson.
+There are six categories: Under each column are five clues (phrased in answer form), increasing in value
+and difficulty.
+
+The first team to go picks a category and a dollar amount. The host then reads the answer. Once the 
+answer is read, a green indicator appears at the bottom of the screen, and the captain for each team may
+ring in using the signaling device. If you hit the buzzer before the green indicator appears,  it will 
+not work. 
+
+The first contestant to ring in successfully must respond in the form of a question. (What is a governor? 
+Who is Hillary Clinton?)
+
+A correct response earns the dollar value of the clue and the opportunity to select the next clue from
+the board. 
+
+An incorrect response or a failure to ring in within the time limit deducts the dollar value of the 
+clue from the team’s score and gives any remaining opponent(s) the opportunity to ring in and respond. 
+
+If none of the contestants gives a correct response, the host reads
+the correct response and the contestant who has most recently given a correct response to a previous
+answer chooses the next answer.
+
+When the “Daily Double” screen appears, only the team that selected that category/amount gets to play.
+They choose a dollar amount to wager, ranging from $0 to the total they have accumulated. When the 
+answer is read, they have the usual amount of time to provide a question. If they are correct, they 
+get the amount they wagered; if they are incorrect, they lose that amount, and no other team gets a 
+chance to try. The host does not know which question will be the Daily Double, since the choice is 
+randomized by the machine and is different every time.
+         
+Final Jeopardy!  A category is announced by the host. The teams will each agree on and write down a wager, 
+based on the category, of as little as $0 or up to as much money as they have accumulated. The contestants
+have 30 seconds to write a response, again phrased in the form of a question. 
