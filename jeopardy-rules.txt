@@ -30,4 +30,4 @@ randomized by the machine and is different every time.
          
 Final Jeopardy!  A category is announced by the host. The teams will each agree on and write down a wager, 
 based on the category, of as little as $0 or up to as much money as they have accumulated. The contestants
-have 30 seconds to write a response, again phrased in the form of a question. 
+have 30 seconds to write a response, again phrased in the form of a question.
