@@ -5,9 +5,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema jeopardy
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `jeopardy` ;
@@ -60,8 +57,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Table `jeopardy` fill `answers`
+-- -----------------------------------------------------
 Use jeopardy;
-INSERT INTO answers (answer_id, answer)
+INSERT INTO jeopardy.answers (answer_id, answer)
 VALUES
 (1, 'Anne of Cleves'),
 (2, 'Yasuke is known as the first foreign-born samurai in 16th-century Japan'),
@@ -95,29 +96,31 @@ VALUES
 (30, 'A battle formation that consisted of soldiers with long spears placed into circular, tightly packed formations')
 ;
 
-INSERT INTO questions (question_id, question, false_answers, answer_id, points)
+-- -----------------------------------------------------
+-- Table `jeopardy` fill `questions`
+-- -----------------------------------------------------
+INSERT INTO jeopardy.questions (question_id, question, false_answers, answer_id, points)
 VALUES
-(1, 'Which queen had the shortest reign of Henry VIII’s six wives?', 1, 1, 300),
-(2, 'In 16th-century Japan, who was Yasuke?', 2, 2, 300),
-(3, 'Who wrote the 12th-century account Historia regum Britanniae (The History of the Kings of Britain), which is often credited with making the legend of King Arthur popular?', 3, 3, 300),
-
-(4, 'It is thought that Harriet Tubman directly rescued around 300 people from slavery and gave instructions to help dozens more. But in which conflict did she become the first woman to lead an armed assault?', 1, 1, 300),
-(5, 'In which country is the Bay of Pigs?', 2, 2, 300),
-(6, 'Which medieval queen was married to both Louis VII of France and Henry II of England?', 3, 3, 300),
-(7, 'Who was the first human to journey into space?', 1, 1, 300),
-(8, 'Whose body was exhumed from Westminster Abbey, more than two years after his death, to be ‘executed’ for treason?', 2, 2, 300),
-(9, 'Who ultimately succeeded King Alfred the Great as ‘king of the Anglo-Saxons’?', 3, 3, 300),
-(10, 'By what nickname is Edward Teach better known?', 1, 1, 300),
-(11, 'Julius Caesar was assassinated on 15 March 44 BC, a date now often known by what term?', 2, 2, 300),
-(12, 'Where did the Great Fire of London begin, on 2 September 1666?', 3, 3, 300),
-(13, 'What German dance, which sees partners spinning together in close contact, was condemned as depraved when it was first seen in Regency society?', 1, 1, 300),
-(14, 'Which king preceded Queen Victoria?', 2, 2, 300),
-(15, 'Guy Bailey, Roy Hackett and Paul Stephenson made history in 1963, as part of a protest against a bus company that refused to employ black and Asian drivers in which UK city?', 3, 3, 300),
-(16, 'Who famously duelled Alexander Hamilton on 11 July 1804, resulting in the founding father’s death?', 1, 1, 300),
-(17, 'What, in the 16th and 17th centuries, was a ‘drunkard’s cloak’?', 2, 2, 300),
-(18, 'What is considered the world’s oldest writing system?', 3, 3, 300),
-(19, 'Who was the mother of Emperor Nero and the wife of Emperor Claudius?', 1, 1, 300),
-(20, 'Which pioneer of hair products became America’s first black female millionaire?', 2, 2, 300),
+(1, 'Which queen had the shortest reign of Henry VIII’s six wives?', 1, 1, 100),
+(2, 'In 16th-century Japan, who was Yasuke?', 2, 2, 100),
+(3, 'Who wrote the 12th-century account Historia regum Britanniae (The History of the Kings of Britain), which is often credited with making the legend of King Arthur popular?', 3, 3, 100),
+(4, 'It is thought that Harriet Tubman directly rescued around 100 people from slavery and gave instructions to help dozens more. But in which conflict did she become the first woman to lead an armed assault?', 1, 1, 100),
+(5, 'In which country is the Bay of Pigs?', 2, 2, 100),
+(6, 'Which medieval queen was married to both Louis VII of France and Henry II of England?', 3, 3, 100),
+(7, 'Who was the first human to journey into space?', 1, 1, 100),
+(8, 'Whose body was exhumed from Westminster Abbey, more than two years after his death, to be ‘executed’ for treason?', 2, 2, 100),
+(9, 'Who ultimately succeeded King Alfred the Great as ‘king of the Anglo-Saxons’?', 3, 3, 100),
+(10, 'By what nickname is Edward Teach better known?', 1, 1, 100),
+(11, 'Julius Caesar was assassinated on 15 March 44 BC, a date now often known by what term?', 2, 2, 200),
+(12, 'Where did the Great Fire of London begin, on 2 September 1666?', 3, 3, 200),
+(13, 'What German dance, which sees partners spinning together in close contact, was condemned as depraved when it was first seen in Regency society?', 1, 1, 200),
+(14, 'Which king preceded Queen Victoria?', 2, 2, 200),
+(15, 'Guy Bailey, Roy Hackett and Paul Stephenson made history in 1963, as part of a protest against a bus company that refused to employ black and Asian drivers in which UK city?', 3, 3, 200),
+(16, 'Who famously duelled Alexander Hamilton on 11 July 1804, resulting in the founding father’s death?', 1, 1, 200),
+(17, 'What, in the 16th and 17th centuries, was a ‘drunkard’s cloak’?', 2, 2, 200),
+(18, 'What is considered the world’s oldest writing system?', 3, 3, 200),
+(19, 'Who was the mother of Emperor Nero and the wife of Emperor Claudius?', 1, 1, 200),
+(20, 'Which pioneer of hair products became America’s first black female millionaire?', 2, 2, 200),
 (21, 'What was Mary Anning (1799–1847) famous for?', 3, 3, 300),
 (22, 'Who gave Queen Elizabeth I the soubriquet ‘Gloriana’?', 1, 1, 300),
 (23, 'Although never taking her seat, who was the first woman to be elected to the houses of parliament?', 2, 2, 300),
