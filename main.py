@@ -27,10 +27,10 @@ def getDatabase():
 
 #checks if a defult database is created
 # if not it creates it.
-if not path.exists("\defaultHistory.db")
+if not path.exists("\defaultHistory.db"):
     create_connection(r"\defaultHistory.db")
     #Connecting to sqlite
-    conn = sqlite3.connect('\defaultHistory.db')
+    conn = sqlite3.connect(r'defaultHistory.db')
 
     #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
@@ -39,7 +39,7 @@ if not path.exists("\defaultHistory.db")
     cursor.execute("DROP TABLE IF EXISTS questions")
 
     #Creating table as per requirement
-    questions ='''CREATE TABLE questions(
+    questions = '''CREATE TABLE questions(
         `question_id` INT(11) NOT NULL,
         `question` TEXT NULL DEFAULT NULL,
         `false_answers` VARCHAR(4) NULL DEFAULT NULL,
@@ -53,7 +53,7 @@ if not path.exists("\defaultHistory.db")
         REFERENCES `jeopardy`.`answers` (`answer_id`))
     )'''
 
-    question = ''' INSERT INTO questions(question_id, question, false_answers, answer_id, points)
+    question = '''INSERT INTO questions(question_id, question, false_answers, answer_id, points)
               VALUES(1, 'Which queen had the shortest reign of Henry VIII’s six wives?', 1, 1, 100),
                 (2, 'In 16th-century Japan, who was Yasuke?', 2, 2, 100),
                 (3, 'Who wrote the 12th-century account Historia regum Britanniae (The History of the Kings of Britain), which is often credited with making the legend of King Arthur popular?', 3, 3, 100),
@@ -88,7 +88,7 @@ if not path.exists("\defaultHistory.db")
     cursor.execute(questions, question)
     print("Table questions created successfully........")
 
-     #Droping answers table if already exists.
+     #Dropping answers table if already exists.
     cursor.execute("DROP TABLE IF EXISTS answers")
 
     #Creating table as per requirement
@@ -134,7 +134,7 @@ if not path.exists("\defaultHistory.db")
     cursor.execute(answers, answer)
     print("Table answers created successfully........")
 
-    # Commit your changes in the database
+    # Commit changes in the database
     conn.commit()
 
     #Closing the connection
