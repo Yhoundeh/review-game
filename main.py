@@ -19,16 +19,16 @@ def create_connection(db_file):
 def getDatabase():
     #Asks user for the address of a database if backspace is pressed 
     # then it defults to the defaultHistory.db
-    default = r"\defaultHistory.db"
-    user_input = raw_input("Please enter the location of the question database or press backspace: %s"%default + chr(8)*4)
+    default = r"defaultHistory.db"
+    user_input = input("Please enter the location of the question database or press backspace: %s"%default + chr(8)*4)
     if not user_input:
         user_input = default
     create_connection(user_input)
 
 #checks if a defult database is created
 # if not it creates it.
-if not path.exists("\defaultHistory.db"):
-    create_connection(r"\defaultHistory.db")
+if not path.exists("defaultHistory.db"):
+    create_connection(r"defaultHistory.db")
     #Connecting to sqlite
     conn = sqlite3.connect(r'defaultHistory.db')
 
@@ -46,11 +46,9 @@ if not path.exists("\defaultHistory.db"):
         `points` INT NULL,
         `answer_id` INT(11) NOT NULL,
         PRIMARY KEY (`question_id`),
-        UNIQUE INDEX `question_id_UNIQUE` (`question_id` ASC) VISIBLE,
-        INDEX `fk_questions_answers_idx` (`answer_id` ASC) VISIBLE,
         CONSTRAINT `fk_questions_answers`
         FOREIGN KEY (`answer_id`)
-        REFERENCES `jeopardy`.`answers` (`answer_id`))
+        REFERENCES `answers` (`answer_id`)
     )'''
 
     question = '''INSERT INTO questions(question_id, question, false_answers, answer_id, points)
@@ -85,7 +83,8 @@ if not path.exists("\defaultHistory.db"):
                 (29, 'In which year did Emily Wilding Davison die as a result of a collision with King George V’s horse during the Epsom Derby?', 2, 2, 300),
                 (30, 'In medieval history, what was a ‘schiltron’?', 3, 3, 300) '''
 
-    cursor.execute(questions, question)
+    cursor.execute(questions)
+    cursor.execute(question)
     print("Table questions created successfully........")
 
      #Dropping answers table if already exists.
@@ -95,8 +94,7 @@ if not path.exists("\defaultHistory.db"):
     answers ='''CREATE TABLE answers(
         `answer_id` INT(11) NOT NULL,
         `answer` TEXT NULL DEFAULT NULL,
-        PRIMARY KEY (`answer_id`),
-        UNIQUE INDEX `answer_id_UNIQUE` (`answer_id` ASC) VISIBLE)
+        PRIMARY KEY (`answer_id`)
     )'''
 
     answer = ''' INSERT INTO answers(answer_id, answer)
@@ -131,7 +129,8 @@ if not path.exists("\defaultHistory.db"):
                 (29, '1913'),
                 (30, 'A battle formation that consisted of soldiers with long spears placed into circular, tightly packed formations') '''
 
-    cursor.execute(answers, answer)
+    cursor.execute(answers)
+    cursor.execute(answer)
     print("Table answers created successfully........")
 
     # Commit changes in the database
