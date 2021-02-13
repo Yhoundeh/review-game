@@ -15,6 +15,7 @@ def create_connection(db_file):
     finally:
         if conn:
             conn.close()
+    #call allTheOtherStuff()
 
 def getDatabase():
     #Asks user for the address of a database if backspace is pressed 
