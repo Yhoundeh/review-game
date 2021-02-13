@@ -1,11 +1,11 @@
 # Review Game
 ## Overview
 
-This program creates a simple game of Jeopardy from a user defined database.
+This program creates a simple game of Jeopardy from a user defined database or a supplied history database.
 
 ## Environment
 
-This program runs with python arcade and uses a sqlite database. It was written mostly in in vscode but the database was created with MySQL Workbench and sqlite.
+This program runs with python arcade, pandas, and uses an sqlite database. It was written mostly in in vscode but the database was created with MySQL Workbench and sqlite.
 
 It was written in Python and SQL.
 
@@ -17,4 +17,4 @@ Written by: [Olivia Seymour](https://github.com/olivia-seymour), [Aaron Dunn](ht
 
 [Quiz Questions](https://www.historyextra.com/magazine/history-quiz-questions-list/)
 
-[Youtube Demo]()
+[Youtube Demo](https://youtu.be/kh6c0SOfkH4)

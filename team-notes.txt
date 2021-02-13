@@ -28,3 +28,14 @@ Debugging Phase March 23 to 30th
 
 Demo (Everything Done) - April 1
     Feedback and submit April 3
+
+Questions:
+Project Name?
+Database in memory?
+That one backspace weird code? What does the % sign do?
+Does cursor.execute evaluate as true in an if statement?
+For wrong values do we need a vachar? A set? Not sure.
+Does the database script work? websites keep talking about sqlinjection and python bindings?
+Accept the to collaborator permisions.
+Check the current code.
+Get the windows end.

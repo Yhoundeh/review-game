@@ -40,6 +40,7 @@ if not path.exists("defaultHistory.db"):
     cursor.execute("DROP TABLE IF EXISTS questions")
 
     #Creating table as per requirement
+    #Wrong aswers should be a set?
     questions = '''CREATE TABLE questions(
         `question_id` INT(11) NOT NULL,
         `question` TEXT NULL DEFAULT NULL,
@@ -84,9 +85,8 @@ if not path.exists("defaultHistory.db"):
                 (29, 'In which year did Emily Wilding Davison die as a result of a collision with King George V’s horse during the Epsom Derby?', 2, 2, 300),
                 (30, 'In medieval history, what was a ‘schiltron’?', 3, 3, 300) '''
 
-    cursor.execute(questions)
-    cursor.execute(question)
-    print("Table questions created successfully........")
+    if cursor.execute(questions) and cursor.execute(question):
+        print("Table questions created successfully........")
 
      #Dropping answers table if already exists.
     cursor.execute("DROP TABLE IF EXISTS answers")
@@ -130,9 +130,8 @@ if not path.exists("defaultHistory.db"):
                 (29, '1913'),
                 (30, 'A battle formation that consisted of soldiers with long spears placed into circular, tightly packed formations') '''
 
-    cursor.execute(answers)
-    cursor.execute(answer)
-    print("Table answers created successfully........")
+    if cursor.execute(answers) and cursor.execute(answer):
+        print("Table answers created successfully........")
 
     # Commit changes in the database
     conn.commit()
