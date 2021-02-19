@@ -4,8 +4,6 @@ from sqlite3 import Error
 import os.path
 from os import path
 
-#SQL STUFF
-
 def create_connection(db_file):
     #Create a database connection to a SQLite database 
     conn = None
