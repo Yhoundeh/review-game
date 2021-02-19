@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-
+#os.path lets you quickly check if a file exists
 import os.path
 from os import path
 
