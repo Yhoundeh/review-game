@@ -1,141 +1,144 @@
-import sqlite3
-from sqlite3 import Error
-#os.path lets you quickly check if a file exists
-import os.path
-from os import path
+import arcade
 
-def create_connection(db_file):
-    #Create a database connection to a SQLite database 
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        print(sqlite3.version)
-    except Error as error:
-        print(error)
-    finally:
-        if conn:
-            conn.close()
-    #call allTheOtherStuff()
+'''
+TO-DO:
+-Calibrate buttons to do different things on different screens (button on game menu should pull up the question, button on the question menu should do something different)
+-Change the grid on the game menu so that it shows buttons in the grid with the value of the questions displayed and the top row shows the categories
+-Need to change the values of the questions to better fit the grid (we only need 5 of each value and it appears we have 10 100 value questions)
+-Figure out how to have each question button call back to a specific question in our database (probably will need a question class)
+-Could use a python version of an ERD (I cannot for the life of me remember what they're called lol)
+-We either need to find a way to write text on top of a sprite or make a image for each of our questions so I can call those in (however making the images will make our database redundant so probaby having text on our sprites will be ideal)
+-Might need another view so we can show the winner at the end
+*I will add more here as I think of things our program is currently lacking.
+'''
 
-def getDatabase():
-    #Asks user for the address of a database if backspace is pressed 
-    # then it defults to the defaultHistory.db
-    default = r"defaultHistory.db"
-    user_input = input("Please enter the location of the question database or press backspace: %s"%default + chr(8)*4)
-    if not user_input:
-        user_input = default
-    create_connection(user_input)
+# Global Variables
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 700
+SCREEN_TITLE = 'Trivia Game'
+ROW_COUNT = 5
+COLUMN_COUNT = 5
+GRID_WIDTH = 100
+GRID_HEIGHT = 100
+MARGIN = 5
+active_view = None
 
-#checks if a defult database is created
-# if not it creates it.
-if not path.exists("defaultHistory.db"):
-    create_connection(r"defaultHistory.db")
-    #Connecting to sqlite
-    conn = sqlite3.connect(r'defaultHistory.db')
+class MenuView(arcade.View):
+    """ Class that manages the 'menu' view. """
 
-    #Creating a cursor object using the cursor() method
-    cursor = conn.cursor()
+    def on_show(self):
+        """ Called when switching to this view"""
+        arcade.set_background_color(arcade.color.BABY_BLUE)
 
-    #Droping questions table if already exists.
-    cursor.execute("DROP TABLE IF EXISTS questions")
+        #I might need to include a setup function here
+        #active_view = 'menu_view'
 
-    #Creating table as per requirement
-    #Wrong aswers should be a set?
-    questions = '''CREATE TABLE questions(
-        `question_id` INT(11) NOT NULL,
-        `question` TEXT NULL DEFAULT NULL,
-        `false_answers` VARCHAR(4) NULL DEFAULT NULL,
-        `points` INT NULL,
-        `answer_id` INT(11) NOT NULL,
-        PRIMARY KEY (`question_id`),
-        CONSTRAINT `fk_questions_answers`
-        FOREIGN KEY (`answer_id`)
-        REFERENCES `answers` (`answer_id`)
-    )'''
+    def on_draw(self):
+        """ Draw the menu """
+        arcade.start_render()
 
-    question = '''INSERT INTO questions(question_id, question, false_answers, answer_id, points)
-              VALUES(1, 'Which queen had the shortest reign of Henry VIII’s six wives?', 1, 1, 100),
-                (2, 'In 16th-century Japan, who was Yasuke?', 2, 2, 100),
-                (3, 'Who wrote the 12th-century account Historia regum Britanniae (The History of the Kings of Britain), which is often credited with making the legend of King Arthur popular?', 3, 3, 100),
-                (4, 'It is thought that Harriet Tubman directly rescued around 100 people from slavery and gave instructions to help dozens more. But in which conflict did she become the first woman to lead an armed assault?', 1, 1, 100),
-                (5, 'In which country is the Bay of Pigs?', 2, 2, 100),
-                (6, 'Which medieval queen was married to both Louis VII of France and Henry II of England?', 3, 3, 100),
-                (7, 'Who was the first human to journey into space?', 1, 1, 100),
-                (8, 'Whose body was exhumed from Westminster Abbey, more than two years after his death, to be ‘executed’ for treason?', 2, 2, 100),
-                (9, 'Who ultimately succeeded King Alfred the Great as ‘king of the Anglo-Saxons’?', 3, 3, 100),
-                (10, 'By what nickname is Edward Teach better known?', 1, 1, 100),
-                (11, 'Julius Caesar was assassinated on 15 March 44 BC, a date now often known by what term?', 2, 2, 200),
-                (12, 'Where did the Great Fire of London begin, on 2 September 1666?', 3, 3, 200),
-                (13, 'What German dance, which sees partners spinning together in close contact, was condemned as depraved when it was first seen in Regency society?', 1, 1, 200),
-                (14, 'Which king preceded Queen Victoria?', 2, 2, 200),
-                (15, 'Guy Bailey, Roy Hackett and Paul Stephenson made history in 1963, as part of a protest against a bus company that refused to employ black and Asian drivers in which UK city?', 3, 3, 200),
-                (16, 'Who famously duelled Alexander Hamilton on 11 July 1804, resulting in the founding father’s death?', 1, 1, 200),
-                (17, 'What, in the 16th and 17th centuries, was a ‘drunkard’s cloak’?', 2, 2, 200),
-                (18, 'What is considered the world’s oldest writing system?', 3, 3, 200),
-                (19, 'Who was the mother of Emperor Nero and the wife of Emperor Claudius?', 1, 1, 200),
-                (20, 'Which pioneer of hair products became America’s first black female millionaire?', 2, 2, 200),
-                (21, 'What was Mary Anning (1799–1847) famous for?', 3, 3, 300),
-                (22, 'Who gave Queen Elizabeth I the soubriquet ‘Gloriana’?', 1, 1, 300),
-                (23, 'Although never taking her seat, who was the first woman to be elected to the houses of parliament?', 2, 2, 300),
-                (24, 'Where was Napoleon Bonaparte born?', 3, 3, 300),
-                (25, 'Can you name the five beach codenames used by Allied forces on D-Day?', 1, 1, 300),
-                (26, 'Where was the first British colony in the Americas?', 2, 2, 300),
-                (27, 'In August 1819, around 60,000 peaceful pro-democracy protestors were attacked in an open square in Manchester. This event was known as…', 3, 3, 300),
-                (28, 'Which rock band formed in 1994 takes its name from a term used by the Allies in the Second World War to describe various UFOs?', 1, 1, 300),
-                (29, 'In which year did Emily Wilding Davison die as a result of a collision with King George V’s horse during the Epsom Derby?', 2, 2, 300),
-                (30, 'In medieval history, what was a ‘schiltron’?', 3, 3, 300) '''
+        ## need to implement as buttons later to add question input functionality
+        arcade.draw_text("History Trivia", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+                         arcade.color.BLACK, font_size=30, anchor_x="center")
 
-    if cursor.execute(questions) and cursor.execute(question):
-        print("Table questions created successfully........")
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """ Use a mouse press to advance to the 'game' view. """
+        game_view = GameView()
+        game_view.setup()
+        self.window.show_view(game_view)
+        active_view = 'game_view'
 
-     #Dropping answers table if already exists.
-    cursor.execute("DROP TABLE IF EXISTS answers")
 
-    #Creating table as per requirement
-    answers ='''CREATE TABLE answers(
-        `answer_id` INT(11) NOT NULL,
-        `answer` TEXT NULL DEFAULT NULL,
-        PRIMARY KEY (`answer_id`)
-    )'''
+class GameView(arcade.View):
+    """ Manage the 'game' view for our program. """
 
-    answer = ''' INSERT INTO answers(answer_id, answer)
-              VALUES(1, 'Anne of Cleves'),
-                (2, 'Yasuke is known as the first foreign-born samurai in 16th-century Japan'),
-                (3, 'Geoffrey of Monmouth'),
-                (4, 'Harriet Tubman served in the America Civil War'),
-                (5, 'It was the site of a failed attempt by a group of Cuban émigrés, with the backing of the US government, to invade the island in 1961.'),
-                (6, 'Eleanor of Aquitaine'),
-                (7, 'Soviet cosmonaut Yuri Gagarin, in April 1961'),
-                (8, 'The body of Oliver Cromwell was exhumed in 1661.'),
-                (9, 'Edward the Elder, son of Alfred and Ealhswith of Mercia'),
-                (10, 'Edward Teach is better known to history as the notorious 17th-century pirate ‘Blackbeard’'),
-                (11, 'The Ides of March'),
-                (12, 'In Thomas Farriner’s bakery on Pudding Lane (though technically the bakehouse was not located on Pudding Lane proper, but on Fish Yard, a small enclave off Pudding Lane)'),
-                (13, 'The Waltz'),
-                (14, 'King William IV (who was Victoria’s uncle)'),
-                (15, 'Bristol'),
-                (16, 'Aaron Burr, the sitting vice president of the USA'),
-                (17, 'The drunkard’s cloak was a form of humiliating punishment used in the past for people who were perceived to have abused alcohol'),
-                (18, 'Cuneiform, an ancient writing system that was first used in around 3400 BC'),
-                (19, 'Agrippina the Younger'),
-                (20, 'Sarah Breedlove – who later became known as Madam CJ Walker'),
-                (21, 'Collecting fossils, she was a palaeontologist'),
-                (22, 'Edmund Spenser, in his epic poem ‘The Faerie Queene’'),
-                (23, 'Countess Markievicz'),
-                (24, 'Corsica'),
-                (25, 'Utah; Omaha; Gold; Juno and Sword'),
-                (26, 'Roanoke'),
-                (27, 'The Peterloo Massacre'),
-                (28, 'The Foo Fighters'),
-                (29, '1913'),
-                (30, 'A battle formation that consisted of soldiers with long spears placed into circular, tightly packed formations') '''
+    def __init__(self):
+        super().__init__()
+        # Create variables here
+        arcade.set_background_color(arcade.color.BABY_BLUE)
+        self.grid_sprite_list = arcade.SpriteList()
+        self.grid_sprites = []
 
-    if cursor.execute(answers) and cursor.execute(answer):
-        print("Table answers created successfully........")
+    def setup(self):
+        for row in range(ROW_COUNT):
+            self.grid_sprites.append([])
+            for column in range(COLUMN_COUNT):
+                x = column * (GRID_WIDTH + MARGIN) + (GRID_WIDTH*4.75 + MARGIN)
+                y = row * (GRID_HEIGHT + MARGIN) + (GRID_HEIGHT / 1 + MARGIN)
+                #need to either create sprite images or figure out how to put values on sprite
+                sprite = arcade.SpriteSolidColor(GRID_WIDTH, GRID_HEIGHT, arcade.color.WHITE)
+                sprite.center_x = x
+                sprite.center_y = y
+                self.grid_sprite_list.append(sprite)
+                self.grid_sprites[row].append(sprite)
 
-    # Commit changes in the database
-    conn.commit()
+    def on_draw(self):
+        """ Draw everything for the game. """
+        arcade.start_render()
+        self.grid_sprite_list.draw()
 
-    #Closing the connection
-    conn.close()
-getDatabase()
+    def on_key_press(self, key, _modifiers):
+        #if space key is his shows the question view
+        #need to switch this over to mouse interactive button
+        if key == arcade.key.SPACE:
+            question_view = QuestionView()
+            self.window.show_view(question_view)
+            active_view = 'question_view'
+
+class QuestionView(arcade.View):
+    #somehow need to specify to get different question view for each question
+    #maybe use setup function to pull which question 
+    def __init__(self):
+        super().__init__()
+        arcade.set_background_color(arcade.color.BABY_BLUE)
+
+    def on_draw(self):
+        """ Draws the question view """
+        arcade.start_render()
+        arcade.draw_text("Question Will Go Here", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
+
+    def on_key_press(self, key, _modifiers):
+        """ If user hits escape, go back to the game view """
+        if key == arcade.key.ESCAPE:
+            game_view = GameView()
+            self.window.show_view(game_view)
+            active_view = 'game_view'
+
+class button():
+    #needs more work
+    def __init__(self, x, y, width, height):
+        super().__init__()
+        self.x = x 
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        #if I use the view variable I set I can change what happens when the button is pressed depending on what screen is active
+        question_view = QuestionView()
+        #self.window.show_view(question_view)
+
+class player():
+    #could potentially need more work 
+    def __init__(self):
+        super().__init__()
+        self.score = 0
+
+    def answer_question(self, correct, question_value):
+        if correct == True:
+            self.score += question_value
+        elif correct == False:
+            self.score -= question_value
+        else:
+            pass
+
+def main():
+    """ Startup """
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, "History Trivia")
+    menu_view = MenuView()
+    window.show_view(menu_view)
+    arcade.run()
+
+
+if __name__ == "__main__":
+    main()

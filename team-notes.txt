@@ -39,3 +39,5 @@ Does the database script work? websites keep talking about sqlinjection and pyth
 Accept the to collaborator permisions.
 Check the current code.
 Get the windows end.
+
+Fix: points should be 100, 300, and 500, with 5 of each chosen.
