@@ -15,7 +15,7 @@ TO-DO:
 # Global Variables
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 700
-SCREEN_TITLE = 'Trivia Game'
+SCREEN_TITLE = 'Historical Pursuit'
 ROW_COUNT = 5
 COLUMN_COUNT = 5
 GRID_WIDTH = 100
@@ -38,8 +38,9 @@ class MenuView(arcade.View):
         arcade.start_render()
 
         ## need to implement as buttons later to add question input functionality
-        arcade.draw_text("History Trivia", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
+        arcade.draw_text("Historical Pursuit", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
                          arcade.color.BLACK, font_size=30, anchor_x="center")
+
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ Use a mouse press to advance to the 'game' view. """
@@ -76,6 +77,8 @@ class GameView(arcade.View):
         """ Draw everything for the game. """
         arcade.start_render()
         self.grid_sprite_list.draw()
+
+    def on_button_press(self, _x, _y, _button, _modifiers))
 
     def on_key_press(self, key, _modifiers):
         #if space key is his shows the question view
