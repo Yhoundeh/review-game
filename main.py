@@ -18,8 +18,9 @@ class MyFlatButton(arcade.gui.UIFlatButton):
     """
     To capture a button click, subclass the button and override on_click.
     """
-    #def __init__(self, text, center_x, center_y, width, height, window):
-    #    self.window = window
+    def __init__(self, text, center_x, center_y, width, height, window):
+        super().__init__(text, center_x, center_y, width, height) #This was the problem
+        self.window = window
 
 
     def on_click(self):
@@ -86,7 +87,7 @@ class GameView(arcade.View):
             center_y=y_slot * 1,
             width=250,
             height=120,
-            #window = self.window
+            window = self.window
         )
         self.ui_manager.add_ui_element(button)
 
