@@ -2,6 +2,7 @@ import arcade
 import arcade.gui
 from arcade.gui import UIManager
 
+#import database
 
 # Global Variables
 SCREEN_WIDTH = 1000
@@ -19,7 +20,7 @@ class MyFlatButton(arcade.gui.UIFlatButton):
     To capture a button click, subclass the button and override on_click.
     """
     def __init__(self, text, center_x, center_y, width, height, window):
-        super().__init__(text, center_x, center_y, width, height) #This was the problem
+        super().__init__(text, center_x, center_y, width, height)
         self.window = window
 
 
@@ -75,33 +76,32 @@ class GameView(arcade.View):
 
     def setup(self):
         self.ui_manager.purge_ui_elements()
-
-        y_slot = self.window.height // 4
-        left_column_x = self.window.width // 4
-        right_column_x = 3 * self.window.width // 4
-
-        # right side elements
-        button = MyFlatButton(
-            'FlatButton',
-            center_x=right_column_x,
-            center_y=y_slot * 1,
-            width=250,
-            height=120,
-            window = self.window
-        )
-        self.ui_manager.add_ui_element(button)
-
         for row in range(ROW_COUNT):
-            self.grid_sprites.append([])
             for column in range(COLUMN_COUNT):
-                x = column * (GRID_WIDTH + MARGIN) + (GRID_WIDTH*4 + MARGIN)
-                y = row * (GRID_HEIGHT + MARGIN) + (GRID_HEIGHT / 1 + MARGIN)
-                #need to either create sprite images or figure out how to put values on sprite
-                sprite = arcade.SpriteSolidColor(GRID_WIDTH, GRID_HEIGHT, arcade.color.WHITE)
-                sprite.center_x = x
-                sprite.center_y = y
-                self.grid_sprite_list.append(sprite)
-                self.grid_sprites[row].append(sprite)
+                right_column_x = column * (GRID_WIDTH + MARGIN) + (GRID_WIDTH*4 + MARGIN)
+                y_slot = row * (GRID_HEIGHT + MARGIN) + (GRID_HEIGHT / 1 + MARGIN)
+                if row < 2:
+                    points = '100'
+                elif row < 4:
+                    points = '300'
+                elif row < 6:
+                    points = '500'
+                else:
+                    points = 'error'
+                button = MyFlatButton(
+                text = points,
+                center_x=right_column_x,
+                center_y=y_slot * 1,
+                width=100,
+                height=100,
+                window = self.window)
+                self.ui_manager.add_ui_element(button)
+
+        # left button array
+       
+
+        
+            
 
     def on_key_press(self, key, _modifiers):
         #if space key is pressed this shows the question view
