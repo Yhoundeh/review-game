@@ -20,14 +20,15 @@ class MyFlatButton(arcade.gui.UIFlatButton):
     """
     To capture a button click, subclass the button and override on_click.
     """
-    def __init__(self, text, center_x, center_y, width, height, window, myid):
-        self.myid = myid
+    def __init__(self, text, center_x, center_y, command, width, height, window):
+        self.command = command
         super().__init__(text, center_x, center_y, width, height)
         self.window = window
 
 
     def on_click(self):
         """ Called when user lets off button """
+        self.command()
         question_view = QuestionView()
         self.window.show_view(question_view)
         #active_view = 'question_view'
@@ -77,7 +78,7 @@ class GameView(arcade.View):
         self.ui_manager.unregister_handlers()
 
     def setup(self):
-        self.ui_manager.purge_ui_elements()
+        #self.ui_manager.purge_ui_elements()
         question = 0
         for row in range(ROW_COUNT):
             for column in range(COLUMN_COUNT):
@@ -97,10 +98,10 @@ class GameView(arcade.View):
                 text = str(question) + '\n'+ points,
                 center_x = column_x,
                 center_y = row_y,
+                command = lambda: print(question),
                 width = 100,
                 height = 100,
-                window = self.window,
-                myid = question
+                window = self.window
                 )
                 self.ui_manager.add_ui_element(button)
 
