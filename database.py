@@ -146,5 +146,5 @@ if cursor.execute(answers) and cursor.execute(answer):
 conn.commit()
 
 #Closing the connection
-conn.close()
+#conn.close()
 getDatabase()

@@ -26,9 +26,9 @@ class MyFlatButton(arcade.gui.UIFlatButton):
         self.window = window
 
 
-    def on_click(self, myid):
+    def on_click(self):
         """ Called when user lets off button """
-        question_view = QuestionView(myid)
+        question_view = QuestionView()
         self.window.show_view(question_view)
         #active_view = 'question_view'
 
@@ -116,10 +116,11 @@ class QuestionView(arcade.View):
         super().__init__()
         arcade.set_background_color(arcade.color.BABY_BLUE)
 
-    def on_draw(self, myid):
+    def on_draw(self):
         """ Draws the question view """
         arcade.start_render()
-        arcade.draw_text(getQuestion(1)[0], SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
+        arcade.draw_text(database.getQuestion(1)[0], SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
+        #arcade.draw_text("Questions Will Go Here", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
 
     def on_key_press(self, key, _modifiers):
         """ If user hits escape, go back to the game view """
