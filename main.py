@@ -3,6 +3,7 @@ import arcade.gui
 from arcade.gui import UIManager
 
 #import database
+import database
 
 # Global Variables
 SCREEN_WIDTH = 1000
@@ -110,7 +111,7 @@ class GameView(arcade.View):
             self.window.show_view(question_view)
             active_view = 'question_view'
 
-class QuestionView(arcade.View, myid):
+class QuestionView(arcade.View):
     def __init__(self):
         super().__init__()
         arcade.set_background_color(arcade.color.BABY_BLUE)
@@ -118,7 +119,7 @@ class QuestionView(arcade.View, myid):
     def on_draw(self, myid):
         """ Draws the question view """
         arcade.start_render()
-        arcade.draw_text("Questions Will Go Here" + myid, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
+        arcade.draw_text(getQuestion(1)[0], SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
 
     def on_key_press(self, key, _modifiers):
         """ If user hits escape, go back to the game view """
