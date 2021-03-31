@@ -98,7 +98,7 @@ class GameView(arcade.View):
                 text = str(question) + '\n'+ points,
                 center_x = column_x,
                 center_y = row_y,
-                command = lambda: print(question),
+                command = lambda: print("You've selected Id " + str(question)),
                 width = 100,
                 height = 100,
                 window = self.window
