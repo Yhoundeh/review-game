@@ -1,20 +1,31 @@
-# Historical Pursuit
-## Overview
+# Overview
 
-This program creates a simple game of Jeopardy from a user defined database or a supplied history database.
+A Jeopardy-style history trivia game, very much in progress. It pulls questions with different point values from a database and presents them. 
 
-## Environment
+It can be run from the command line, and from then on runs in a game window.
 
-This program runs with python arcade, pandas, and uses an sqlite database. It was written mostly in in vscode but the database was created with MySQL Workbench and sqlite.
+# Development Environment
 
-It was written in Python and SQL.
+Developed in Visual Studio Code using Python 3.9.1, and in MySQL Workbench using SQL. 
+Libraries used include Arcade, Pandads, and Sqlite.
 
-Written by: [Olivia Seymour](https://github.com/olivia-seymour), [Aaron Dunn](https://github.com/Yhoundeh/review-game), [Keyanna Oliphant](https://github.com/mon154), [Nicholas Grimmett](https://github.com/gri15005)
+# Collaborators
 
-## Resources
+[Olivia Seymour](https://github.com/olivia-seymour)
+[Aaron Dunn](https://github.com/Yhoundeh)
+[Keyanna Oliphant](https://github.com/mon154)
+[Nicholas Grimmett](https://github.com/gri15005)
 
-[Rules](https://tag.rutgers.edu/wp-content/uploads/2014/05/Jeopardy-instructions.pdf)
 
-[Quiz Questions](https://www.historyextra.com/magazine/history-quiz-questions-list/)
+# Useful Websites
 
-[Youtube Demo](https://youtu.be/kh6c0SOfkH4)
+{Make a list of websites that you found helpful in this project}
+* [historyextra.com](https://www.historyextra.com/magazine/history-quiz-questions-list/)
+* Many, many threads on [stack overflow](https://stackoverflow.com/)
+
+# Future Work
+
+{Make a list of things that you need to fix, improve, and add in the future.}
+* add a question id to each button
+* add multiple choice answers to the question view
+* implement points system
