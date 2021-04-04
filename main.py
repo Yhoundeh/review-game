@@ -2,13 +2,15 @@ import arcade
 import arcade.gui
 from arcade.gui import UIManager
 
+#import database
+import database
 
 # Global Variables
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 700
 SCREEN_TITLE = 'Historical Pursuit'
 ROW_COUNT = 6
-COLUMN_COUNT = 6
+COLUMN_COUNT = 5
 GRID_WIDTH = 100
 GRID_HEIGHT = 100
 MARGIN = 5
@@ -18,8 +20,9 @@ class MyFlatButton(arcade.gui.UIFlatButton):
     """
     To capture a button click, subclass the button and override on_click.
     """
-    def __init__(self, text, center_x, center_y, width, height, window):
-        super().__init__(text, center_x, center_y, width, height) #This was the problem
+    def __init__(self, text, center_x, center_y, width, height, window, myid):
+        self.myid = myid
+        super().__init__(text, center_x, center_y, width, height)
         self.window = window
 
 
@@ -27,7 +30,7 @@ class MyFlatButton(arcade.gui.UIFlatButton):
         """ Called when user lets off button """
         question_view = QuestionView()
         self.window.show_view(question_view)
-        active_view = 'question_view'
+        #active_view = 'question_view'
 
 class MenuView(arcade.View):
     """ Class that manages the 'menu' view. """
@@ -75,33 +78,31 @@ class GameView(arcade.View):
 
     def setup(self):
         self.ui_manager.purge_ui_elements()
-
-        y_slot = self.window.height // 4
-        left_column_x = self.window.width // 4
-        right_column_x = 3 * self.window.width // 4
-
-        # right side elements
-        button = MyFlatButton(
-            'FlatButton',
-            center_x=right_column_x,
-            center_y=y_slot * 1,
-            width=250,
-            height=120,
-            window = self.window
-        )
-        self.ui_manager.add_ui_element(button)
-
+        question = 0
         for row in range(ROW_COUNT):
-            self.grid_sprites.append([])
             for column in range(COLUMN_COUNT):
-                x = column * (GRID_WIDTH + MARGIN) + (GRID_WIDTH*4 + MARGIN)
-                y = row * (GRID_HEIGHT + MARGIN) + (GRID_HEIGHT / 1 + MARGIN)
-                #need to either create sprite images or figure out how to put values on sprite
-                sprite = arcade.SpriteSolidColor(GRID_WIDTH, GRID_HEIGHT, arcade.color.WHITE)
-                sprite.center_x = x
-                sprite.center_y = y
-                self.grid_sprite_list.append(sprite)
-                self.grid_sprites[row].append(sprite)
+                question += 1
+                column_x = column * (GRID_WIDTH + MARGIN) + (GRID_WIDTH*5 + MARGIN)
+                row_y = row * (GRID_HEIGHT + MARGIN) + (GRID_HEIGHT / 1 + MARGIN)
+                if row < 2:
+                    points = '100'
+                elif row < 4:
+                    points = '300'
+                elif row < 6:
+                    points = '500'
+                else:
+                    points = 'error'
+                    #https://www.geeksforgeeks.org/g-fact-42-changing-class-members-python/
+                button = MyFlatButton(
+                text = str(question) + '\n'+ points,
+                center_x = column_x,
+                center_y = row_y,
+                width = 100,
+                height = 100,
+                window = self.window,
+                myid = question
+                )
+                self.ui_manager.add_ui_element(button)
 
     def on_key_press(self, key, _modifiers):
         #if space key is pressed this shows the question view
@@ -118,7 +119,8 @@ class QuestionView(arcade.View):
     def on_draw(self):
         """ Draws the question view """
         arcade.start_render()
-        arcade.draw_text("Questions Will Go Here", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
+        arcade.draw_text(database.getQuestion(1)[0], SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
+        #arcade.draw_text("Questions Will Go Here", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, 30, anchor_x="center")
 
     def on_key_press(self, key, _modifiers):
         """ If user hits escape, go back to the game view """
